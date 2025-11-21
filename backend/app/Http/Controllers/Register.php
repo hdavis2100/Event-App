@@ -12,6 +12,11 @@ class Register extends Controller
 	public function register(Request $request)
 	{
 
+		if ($request->session()->has('user_id')) {
+			return response()->json([
+				'message' => 'Already logged in',
+			]);
+		}
 		$data = $request->validate([
 			'name' => 'required|string|max:255|unique:users,name',
 			'email' => 'email|unique:users,email',
@@ -27,7 +32,7 @@ class Register extends Controller
 		]);
 
 		$request->session()->put('user_id', $user->id);
-		
+
 
 		return response()->json([
 			'message' => 'User registered successfully',

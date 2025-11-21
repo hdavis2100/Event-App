@@ -11,6 +11,12 @@ class addEvent extends Controller
 {
     public function addEvent(Request $request)
     {
+
+        if (!$request->session()->has('user_id')) {
+            return response()->json([
+                'message' => 'Not logged in',
+            ]);
+        }
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
