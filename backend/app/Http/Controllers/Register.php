@@ -22,16 +22,22 @@ class Register extends Controller
 		$user = User::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
-			'password' => Hash:make($data['password']),
+			'password' => Hash::make($data['password']),
 			'role' => $data['role'],
 		]);
+
+		$request->session()->put('user_id', $user->id);
+		
 
 		return response()->json([
 			'message' => 'User registered successfully',
 			'user' => $user,
 		]);
+		
+		
 
 
 
 	
+	}
 }
