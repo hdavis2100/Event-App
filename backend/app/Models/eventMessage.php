@@ -3,8 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Event;
+use App\Models\User;
 
 class eventMessage extends Model
 {
-    //
+    protected $fillable = [
+        'event_id',
+        'user_id',
+        'message',
+    ];
+    
+
 }

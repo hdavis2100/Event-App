@@ -9,6 +9,9 @@ use App\Http\Controllers\logout;
 use App\Http\Controllers\deleteEvent;
 use App\Http\Controllers\updateEvent;
 use App\Http\Controllers\registerForEvent;
+use App\Http\Controllers\unregister;
+use App\Http\Controllers\postEventMessage;
+use App\Http\Controllers\sendPrivateMessage;
 
 
 
@@ -23,3 +26,6 @@ Route::post('/logout', [logout::class, 'logout']);
 Route::post('/deleteEvent/{eventId}', [deleteEvent::class, 'deleteEvent']);
 Route::post('/updateEvent/{eventId}', [updateEvent::class, 'updateEvent']);
 Route::post('/registerForEvent/{eventId}', [registerForEvent::class, 'registerForEvent']);
+Route::post('/unregister/{eventId}', [unregister::class, 'unregister']);
+Route::post('/postEventMessage/{eventId}', [postEventMessage::class, 'postMessage']);
+Route::post('/sendPrivateMessage/{receiverId}', [sendPrivateMessage::class, 'sendMessage']);
