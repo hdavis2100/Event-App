@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 
 class addEvent extends Controller
@@ -15,6 +16,13 @@ class addEvent extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+            ]);
+        }
+        $id = $request->session()->get('user_id');
+
+        if (User::find($id)->role !== 'planner') {
+            return response()->json([
+                'message' => 'Only planners can add events',
             ]);
         }
         $data = $request->validate([
