@@ -14,12 +14,14 @@ class Event extends Model
         'start_time',
         'end_time',
         'is_private',
+        'password',
         
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
+        'password',
     ];
 
     protected function casts(): array
