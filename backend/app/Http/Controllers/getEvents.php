@@ -27,7 +27,7 @@ class getEvents extends Controller
         }
 
         if ($request->date) {
-            $query->whereDate('date', '=', $request->date);
+            $query->whereDate('start_time', '=', $request->date);
         }
 
         $events = $query->get();

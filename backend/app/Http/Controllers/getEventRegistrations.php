@@ -3,8 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
+use App\Models\Registration;
 
 class getEventRegistrations extends Controller
 {
-    //
+    public function getRegistrations(Request $request, $eventId){
+        
+        if (!$request->session()->has('user_id')) {
+            return response()->json([
+                'message' => 'Not logged in',
+            ]);
+        }
+        
+        $registrations = Registration::where('event_id', $eventId)->get();
+
+        return response()->json([
+            'message' => 'Event registrations retrieved successfully',
+            'registrations' => $registrations,
+        ]);
+    }
 }

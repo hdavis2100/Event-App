@@ -9,7 +9,7 @@ use App\Models\User;
 
 class sendPrivateMessage extends Controller
 {
-    public function sendMessage(Request $request, $receiverId){
+    public function sendPrivateMessage(Request $request, $receiverId){
 
         if (!$request->session()->has('user_id')) {
             return response()->json([

@@ -8,7 +8,7 @@ use App\Models\User;
 
 class getPrivateMessages extends Controller
 {
-    public function getMessages(Request $request, $otherUserId){
+    public function getMessages(Request $request){
         
    
         if (!$request->session()->has('user_id')) {
