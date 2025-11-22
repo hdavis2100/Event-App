@@ -9,9 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+    // Add full-text index to events table
+    // Source: https://laravel-news.com/whereFullText
     public function up(): void
     {
-        //
+        Schema::table('events', function (Blueprint $table) {
+            $table->fullText(['title', 'description']);
+        });
     }
 
     /**

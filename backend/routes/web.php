@@ -12,7 +12,12 @@ use App\Http\Controllers\registerForEvent;
 use App\Http\Controllers\unregister;
 use App\Http\Controllers\postEventMessage;
 use App\Http\Controllers\sendPrivateMessage;
-
+use App\Http\Controllers\getEvents;
+use App\Http\Controllers\getPlannerInfo;
+use App\Http\Controllers\getPrivateMessages;
+use App\Http\Controllers\getSeekerInfo;
+use App\Http\Controllers\getEventMessages;
+use App\Http\Controllers\getEventComments;
 
 
 Route::get('/', function () {
@@ -29,3 +34,4 @@ Route::post('/registerForEvent/{eventId}', [registerForEvent::class, 'registerFo
 Route::post('/unregister/{eventId}', [unregister::class, 'unregister']);
 Route::post('/postEventMessage/{eventId}', [postEventMessage::class, 'postMessage']);
 Route::post('/sendPrivateMessage/{receiverId}', [sendPrivateMessage::class, 'sendMessage']);
+Route::get('/events', [getEvents::class, 'getEvents']);
