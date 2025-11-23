@@ -1,33 +1,53 @@
 
 let baseUrl = 'http://ec2-18-220-101-85.us-east-2.compute.amazonaws.com/eventApp/creative-project-module7-512518/backend/public';
 
+let csrfToken = null;
+
+// Fetch CSRF token on module load
+// Pass to header field x-csrf-token for state changing requests
+// Source: https://laravel.com/docs/12.x/csrf#csrf-x-csrf-token
+function getCsrfToken() {
+    return fetch(`${baseUrl}/token`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+    .then(data => {
+        csrfToken = data.token;
+    })
+    .catch(error => { console.error('Error:', error)});
+}
 
 export function register(data) {
+
+    getCsrfToken().then(() => {
     return fetch(`${baseUrl}/Register`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify(data),
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
-    
+    });
 }
 
 export function login(data) {
+    getCsrfToken().then(() => {
     return fetch(`${baseUrl}/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify(data),
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
+    });
 
 }
 
 export function logout() {
     return fetch(`${baseUrl}/logout`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
@@ -36,7 +56,7 @@ export function logout() {
 export function deleteAccount() {
     return fetch(`${baseUrl}/deleteAccount`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
@@ -68,7 +88,7 @@ export function getEvents(options = {}) {
 export function addEvent(data) {
     return fetch(`${baseUrl}/addEvent`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify(data),
     })
     .then(response => response.json())
@@ -78,7 +98,7 @@ export function addEvent(data) {
 export function updateEvent(eventId, data) {
     return fetch(`${baseUrl}/updateEvent/${eventId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify(data),
     })
     .then(response => response.json())
@@ -88,7 +108,7 @@ export function updateEvent(eventId, data) {
 export function deleteEvent(eventId) {
     return fetch(`${baseUrl}/deleteEvent/${eventId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
@@ -97,7 +117,7 @@ export function deleteEvent(eventId) {
 export function registerForEvent(eventId) {
     return fetch(`${baseUrl}/registerForEvent/${eventId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
@@ -106,7 +126,7 @@ export function registerForEvent(eventId) {
 export function unregisterFromEvent(eventId) {
     return fetch(`${baseUrl}/unregister/${eventId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
@@ -133,7 +153,7 @@ export function getEventComments(eventId) {
 export function postEventComment(eventId, data) {
     return fetch(`${baseUrl}/postEventMessage/${eventId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify(data),
     })
     .then(response => response.json())
@@ -152,7 +172,7 @@ export function getPrivateMessages() {
 export function sendPrivateMessage(receiverId, data) {
     return fetch(`${baseUrl}/sendPrivateMessage/${receiverId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify(data),
     })
     .then(response => response.json())

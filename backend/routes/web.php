@@ -21,9 +21,15 @@ use App\Http\Controllers\getEventComments;
 use App\Http\Controllers\getEventRegistrations;
 
 
-Route::get('/', function () {
-    return view('welcome');
+// CSRF Token Route
+// Source: https://laravel.com/docs/12.x/csrf#csrf-x-csrf-token
+Route::get('/token', function () {
+
+    return response()->json(['token' => csrf_token()]);
+
 });
+
+
 Route::post('/Register', [Register::class, 'register']);
 Route::post('/addEvent', [addEvent::class, 'addEvent']);
 Route::post('/deleteAccount', [account::class, 'deleteAccount']);
