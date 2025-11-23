@@ -14,13 +14,14 @@ function getCsrfToken() {
     .then(response => response.json())
     .then(data => {
         csrfToken = data.token;
+        return csrfToken;
     })
     .catch(error => { console.error('Error:', error)});
 }
 
 export function register(data) {
 
-    getCsrfToken().then(() => {
+    getCsrfToken().then((csrfToken) => {
     return fetch(`${baseUrl}/Register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
@@ -32,7 +33,7 @@ export function register(data) {
 }
 
 export function login(data) {
-    getCsrfToken().then(() => {
+    getCsrfToken().then((csrfToken) => {
     return fetch(`${baseUrl}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
