@@ -14,6 +14,7 @@ class sendPrivateMessage extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $senderId = $request->session()->get('user_id');
@@ -28,6 +29,7 @@ class sendPrivateMessage extends Controller
         return response()->json([
             'message' => 'Private message sent successfully',
             'privateMessage' => $privateMessage,
+            'success' => true
         ]);
     }
 }

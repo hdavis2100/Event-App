@@ -12,6 +12,7 @@ class account extends Controller
             
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $userId = $request->session()->get('user_id');
@@ -24,12 +25,14 @@ class account extends Controller
             
             return response()->json([
                 'message' => 'Account deleted successfully',
+                'success' => true
             ]);
         } 
         
         else{
             return response()->json([
                 'message' => 'User not found',
+                'success' => false
             ]);
         }
     }

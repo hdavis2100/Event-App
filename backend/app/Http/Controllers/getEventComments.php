@@ -15,6 +15,7 @@ class getEventComments extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
 
 
@@ -24,6 +25,7 @@ class getEventComments extends Controller
         return response()->json([
             'message' => 'Event comments retrieved successfully',
             'eventComments' => $eventComments,
+            'success' => true
         ]);
     }
 }

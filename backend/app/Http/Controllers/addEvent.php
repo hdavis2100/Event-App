@@ -16,6 +16,7 @@ class addEvent extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $id = $request->session()->get('user_id');
@@ -23,6 +24,7 @@ class addEvent extends Controller
         if (User::find($id)->role !== 'planner') {
             return response()->json([
                 'message' => 'Only planners can add events',
+                'success' => false
             ]);
         }
         $data = $request->validate([
@@ -49,6 +51,7 @@ class addEvent extends Controller
         return response()->json([
             'message' => 'Event added successfully',
             'event' => $event,
+            'success' => true
         ]);
     }
 }

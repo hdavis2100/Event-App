@@ -14,6 +14,7 @@ class postEventMessage extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $userId = $request->session()->get('user_id');
@@ -28,6 +29,7 @@ class postEventMessage extends Controller
         return response()->json([
             'message' => 'Message posted successfully',
             'eventMessage' => $eventMessage,
+            'success' => true
         ]);
     }
 }

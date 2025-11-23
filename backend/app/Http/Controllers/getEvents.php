@@ -13,6 +13,7 @@ class getEvents extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
 
@@ -34,6 +35,7 @@ class getEvents extends Controller
         return response()->json([
             'message' => 'Events retrieved successfully',
             'events' => $events,
+            'success' => true
         ]);
     }
 }

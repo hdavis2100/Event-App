@@ -13,6 +13,7 @@ class updateEvent extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $id = $request->session()->get('user_id');
@@ -21,6 +22,7 @@ class updateEvent extends Controller
         if ($user->role !== 'planner') {
             return response()->json([
                 'message' => 'Only planners can update events',
+                'success' => false
             ]);
         }
 
@@ -29,6 +31,7 @@ class updateEvent extends Controller
         if (!$event) {
             return response()->json([
                 'message' => 'Event not found',
+                'success' => false
             ]);
         }
 
@@ -48,6 +51,7 @@ class updateEvent extends Controller
         return response()->json([
             'message' => 'Event updated successfully',
             'event' => $event,
+            'success' => true
         ]);
     }
 

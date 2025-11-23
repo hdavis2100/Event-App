@@ -13,6 +13,7 @@ class deleteEvent extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $userId = $request->session()->get('user_id');
@@ -21,6 +22,7 @@ class deleteEvent extends Controller
         if ($user->role !== 'planner') {
             return response()->json([
                 'message' => 'Only planners can delete events',
+                'success' => false
             ]);
         }
 
@@ -29,10 +31,12 @@ class deleteEvent extends Controller
             $event->delete();
             return response()->json([
                 'message' => 'Event deleted successfully',
+                'success' => true
             ]);
         } else {
             return response()->json([
                 'message' => 'Event not found',
+                'success' => false
             ]);
         }
     }

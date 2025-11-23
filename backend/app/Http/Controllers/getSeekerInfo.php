@@ -14,6 +14,7 @@ class getSeekerInfo extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $registeredEvents = $this->getRegisteredEvents($request);
@@ -22,6 +23,7 @@ class getSeekerInfo extends Controller
         return response()->json([
             'message' => 'Seeker info retrieved successfully',
             'registeredEvents' => $registeredEvents,
+            'success' => true
         ]);
     }
 

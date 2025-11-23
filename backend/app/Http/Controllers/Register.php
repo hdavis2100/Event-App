@@ -15,6 +15,7 @@ class Register extends Controller
 		if ($request->session()->has('user_id')) {
 			return response()->json([
 				'message' => 'Already logged in',
+				'success' => false
 			]);
 		}
 		$data = $request->validate([
@@ -37,6 +38,7 @@ class Register extends Controller
 		return response()->json([
 			'message' => 'User registered successfully',
 			'user' => $user,
+			'success' => true
 		]);
 		
 		

@@ -10,11 +10,13 @@ class logout extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $request->session()->forget('user_id');
         return response()->json([
             'message' => 'Logout successful',
+            'success' => true
         ]);
     }
 }

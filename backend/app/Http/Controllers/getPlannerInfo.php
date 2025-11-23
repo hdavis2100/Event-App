@@ -13,6 +13,7 @@ class getPlannerInfo extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
 
@@ -23,6 +24,7 @@ class getPlannerInfo extends Controller
         return response()->json([
             'message' => 'Planner info retrieved successfully',
             'events' => $events,
+            'success' => true
         ]);
     }
 

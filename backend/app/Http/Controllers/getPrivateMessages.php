@@ -14,6 +14,7 @@ class getPrivateMessages extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]); 
 
         }
@@ -23,6 +24,7 @@ class getPrivateMessages extends Controller
         return response()->json([
             'message' => 'Private messages retrieved successfully',
             'privateMessages' => $privateMessages,
+            'success' => true
         ]);
     }
 

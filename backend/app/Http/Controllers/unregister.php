@@ -13,6 +13,7 @@ class unregister extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $userId = $request->session()->get('user_id');
@@ -22,6 +23,7 @@ class unregister extends Controller
         if (!$registration) {
             return response()->json([
                 'message' => 'Registration not found',
+                'success' => false
             ]);
         }
         $registration->delete();
@@ -29,6 +31,7 @@ class unregister extends Controller
 
         return response()->json([
             'message' => 'Unregistered from event successfully',
+            'success' => true
         ]);
     }
 }

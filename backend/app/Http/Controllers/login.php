@@ -14,6 +14,7 @@ class login extends Controller
         if ($request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Already logged in',
+                'success' => false
             ]);
         }
         $data = $request->validate([
@@ -25,13 +26,15 @@ class login extends Controller
         $user = User::where('name', $data['name'])->first();
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                'message' => 'Invalid credentials'
+                'message' => 'Invalid credentials',
+                'success' => false
             ]);
         }
         $request->session()->put('user_id', $user->id);
         return response()->json([
             'message' => 'Login successful',
             'user' => $user,
+            'success' => true
         ]);
 
     }

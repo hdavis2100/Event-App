@@ -16,6 +16,7 @@ class registerForEvent extends Controller
         if (!$request->session()->has('user_id')) {
             return response()->json([
                 'message' => 'Not logged in',
+                'success' => false
             ]);
         }
         $userId = $request->session()->get('user_id');
@@ -28,6 +29,7 @@ class registerForEvent extends Controller
             if (!hash::check($password, $event->password)) {
                 return response()->json([
                     'message' => 'Incorrect password for private event',
+                    'success' => false
                 ]);
             }
         }
@@ -40,12 +42,14 @@ class registerForEvent extends Controller
         if ($user->role !== 'seeker') {
             return response()->json([
                 'message' => 'Only seekers can register for events',
+                'success' => false
             ]);
         }
 
         return response()->json([
             'message' => 'Registered for event successfully',
             'registration' => $registration,
+            'success' => true
         ]);
     }
 }
