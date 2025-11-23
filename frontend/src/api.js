@@ -21,26 +21,26 @@ function getCsrfToken() {
 
 export function register(data) {
 
-    getCsrfToken().then((csrfToken) => {
-    return fetch(`${baseUrl}/Register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .catch(error => { console.error('Error:', error)});
+    return getCsrfToken().then((csrfToken) => {
+        return fetch(`${baseUrl}/Register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .catch(error => { console.error('Error:', error)});
     });
 }
 
 export function login(data) {
-    getCsrfToken().then((csrfToken) => {
-    return fetch(`${baseUrl}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .catch(error => { console.error('Error:', error)});
+    return getCsrfToken().then((csrfToken) => {
+        return fetch(`${baseUrl}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .catch(error => { console.error('Error:', error)});
     });
 
 }
