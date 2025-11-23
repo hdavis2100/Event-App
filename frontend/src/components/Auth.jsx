@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { register, login } from '../api.js ';
+import { register, login } from '../api.js';
 
 function Auth({onLoggedIn}) {
 
