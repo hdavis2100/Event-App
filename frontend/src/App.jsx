@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import Auth from './components/Auth.jsx'
 
 function App() {
   
