@@ -62,7 +62,7 @@ function App() {
           {user.role === 'planner' ? (
             <PlannerDashboard />
           ) : (
-            <SeekerDashboard />
+            <div> seeker dashboard </div>
           )}
         </div>
       ) : (
