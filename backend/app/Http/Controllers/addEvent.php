@@ -31,7 +31,7 @@ class addEvent extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'location' => 'nullable|string|max:255',
+            'location' => 'required|string|max:255',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
             'is_private' => 'required|boolean',
