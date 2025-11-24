@@ -1,18 +1,41 @@
 import { useState } from 'react'
 import './App.css'
 import Auth from './components/Auth.jsx'
+import PlannerDashboard from './components/PlannerDashboard.jsx';
+import SeekerDashboard from './components/SeekerDashboard.jsx';
+import { logout, deleteAccount } from './api.js';
 
 function App() {
   
   const [user, setUser] = useState(null);
+  
 
   function handleLoggedIn(loggedInUser) {
     setUser(loggedInUser);
+    setRole(loggedInUser.role);
   }
 
   function handleLogout() {
-    setUser(null);
+    
+    logout().then(response => {
+        if (response.success) {
+            setUser(null);
+        } else {
+            alert('Logout failed: ' + response.message);
+        }
+    });
   }
+
+  function handleDeleteAccount() {
+    deleteAccount().then(response => {
+        if (response.success) {
+            setUser(null);
+        } else {
+            alert('Account deletion failed: ' + response.message);
+        }
+    });
+  }
+
   
 
   return (
@@ -24,6 +47,12 @@ function App() {
         <div>
           <p> Welcome, {user.name} ({user.role}) </p>
           <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleDeleteAccount}>Delete Account</button>
+          {user.role === 'planner' ? (
+            <PlannerDashboard />
+          ) : (
+            <SeekerDashboard />
+          )}
         </div>
       ) : (
         <Auth onLoggedIn={handleLoggedIn} />
