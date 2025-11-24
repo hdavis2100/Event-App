@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 
 class addEvent extends Controller
@@ -27,7 +28,7 @@ class addEvent extends Controller
                 'success' => false
             ]);
         }
-        $data = $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'location' => 'nullable|string|max:255',
@@ -36,6 +37,16 @@ class addEvent extends Controller
             'is_private' => 'required|boolean',
             'password' => 'nullable|string|max:255',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+                'success' => false
+            ]);
+        }
+
+        $data = $validator->validated();
 
         $event = Event::create([
             'user_id' => $request->session()->get('user_id'),
