@@ -12,7 +12,6 @@ function App() {
 
   function handleLoggedIn(loggedInUser) {
     setUser(loggedInUser);
-    setRole(loggedInUser.role);
   }
 
   function handleLogout() {

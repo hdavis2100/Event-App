@@ -33,18 +33,17 @@ class registerForEvent extends Controller
                 ]);
             }
         }
-
-        $registration = Registration::create([
-            'user_id' => $userId,
-            'event_id' => $eventId,
-        ]);
-
         if ($user->role !== 'seeker') {
             return response()->json([
                 'message' => 'Only seekers can register for events',
                 'success' => false
             ]);
         }
+
+        $registration = Registration::create([
+            'user_id' => $userId,
+            'event_id' => $eventId,
+        ]);
 
         return response()->json([
             'message' => 'Registered for event successfully',

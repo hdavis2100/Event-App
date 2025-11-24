@@ -16,7 +16,6 @@ use App\Http\Controllers\getEvents;
 use App\Http\Controllers\getPlannerInfo;
 use App\Http\Controllers\getPrivateMessages;
 use App\Http\Controllers\getSeekerInfo;
-use App\Http\Controllers\getEventMessages;
 use App\Http\Controllers\getEventComments;
 use App\Http\Controllers\getEventRegistrations;
 
@@ -45,5 +44,5 @@ Route::get('/events', [getEvents::class, 'getEvents']);
 Route::get('/plannerInfo', [getPlannerInfo::class, 'getPlannerInfo']);
 Route::get('/privateMessages', [getPrivateMessages::class, 'getMessages']);
 Route::get('/seekerInfo', [getSeekerInfo::class, 'getInfo']);
-Route::get('/eventComments/{eventId}', [getEventMessages::class, 'getComments']);
+Route::get('/eventComments/{eventId}', [getEventComments::class, 'getComments']);
 Route::get('/eventRegistrations/{eventId}', [getEventRegistrations::class, 'getRegistrations']);

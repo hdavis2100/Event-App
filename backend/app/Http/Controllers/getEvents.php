@@ -18,7 +18,7 @@ class getEvents extends Controller
         }
 
         $query = Event::query();
-        $query->orderBy('date', 'desc');
+        $query->orderBy('start_time', 'desc');
 
         // Full-text search on title and description
         // Source: https://laravel-news.com/whereFullText

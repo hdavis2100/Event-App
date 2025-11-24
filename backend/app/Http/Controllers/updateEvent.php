@@ -38,7 +38,6 @@ class updateEvent extends Controller
         $data = $request->validate([
             'title' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|nullable|string',
-            'date' => 'sometimes|required|date',
             'location' => 'sometimes|nullable|string|max:255',
             'start_time' => 'sometimes|required|date',
             'end_time' => 'sometimes|required|date|after_or_equal:start_time',
