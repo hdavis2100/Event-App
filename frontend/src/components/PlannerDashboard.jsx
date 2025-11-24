@@ -103,9 +103,7 @@ function PlannerDashboard() {
 
     
     
-    if (events.length === 0) {
-        return <p> You have no events planned. </p>;
-    }
+    
     return (
         <div>
         <div>
@@ -132,6 +130,9 @@ function PlannerDashboard() {
         <div>
             <h2> Planner Dashboard: </h2>
             <h3> Your Events: </h3>
+            {events.length === 0 && <p>No events created yet.</p>}
+
+            {events.length > 0 && (
             <ul>
                 {events.map(event => (
                     <li key={event.id}>
@@ -180,13 +181,16 @@ function PlannerDashboard() {
                                 ))
                             )}
                             </ul>
+                            
                         )}
+
 
 
                     </li>
 
                 ))}
             </ul>
+            )}
         </div>
     </div>
     );
