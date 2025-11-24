@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState} from 'react'
+import {Routes, Route, Link} from 'react-router-dom'
 import './App.css'
 import Auth from './components/Auth.jsx'
 import PlannerDashboard from './components/PlannerDashboard.jsx';
@@ -47,27 +48,59 @@ function App() {
     });
   }
 
+  if (!user) {
+    return <Auth onLoggedIn={handleLoggedIn} />;
+  }
+
   
+  if (user.role === 'seeker') {
+    return (
+      <div>
+        <header>
+
+          <span>Welcome, {user.name} ({user.role})</span>
+        </header>
+
+        <h1> Event Seeker </h1>
+
+        <nav>
+         
+        </nav>
+
+        <div>
+          
+          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleDeleteAccount}>Delete Account</button>
+
+        </div>
+        
+      </div>
+    )
+  }
 
   return (
     <div>
 
+      <header>
+        <span>Welcome, {user.name} ({user.role})</span>
+        <nav>
+          <Link to="/">Dashboard</Link>
+        </nav>
+      </header>
       <h1> Event Planner </h1>
 
-      {user ? (
-        <div>
-          <p> Welcome, {user.name} ({user.role}) </p>
-          <button onClick={handleLogout}>Logout</button>
-          <button onClick={handleDeleteAccount}>Delete Account</button>
-          {user.role === 'planner' ? (
-            <PlannerDashboard />
-          ) : (
-            <div> seeker dashboard </div>
-          )}
-        </div>
-      ) : (
-        <Auth onLoggedIn={handleLoggedIn} />
-      )}
+      
+      <div>
+          
+        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleDeleteAccount}>Delete Account</button>
+        
+      </div>
+      <Routes>
+        <Route path="/" element={<PlannerDashboard />} />
+      </Routes>
+      
+      
     </div>
   )
 }
