@@ -17,15 +17,7 @@ function App() {
     setUser(loggedInUser);
   }
 
-  useEffect(() => {
-
-    login().then(response => {
-        if (response.success) {
-            setUser(response.user);
-        }
-    });
-
-  }, []);
+  
 
   function handleLogout() {
     
@@ -53,7 +45,7 @@ function App() {
     <div>
     <Auth onLoggedIn={handleLoggedIn} />;
     </div>
-    
+
     )
   }
 
