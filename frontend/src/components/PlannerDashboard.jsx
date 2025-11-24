@@ -101,7 +101,7 @@ function PlannerDashboard() {
         setRegEventId(eventId);
     }
 
-    }
+    
     
     if (events.length === 0) {
         return <p> You have no events planned. </p>;
@@ -191,5 +191,6 @@ function PlannerDashboard() {
     </div>
     );
 
+}
 
 export default PlannerDashboard;
