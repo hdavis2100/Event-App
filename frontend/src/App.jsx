@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Auth from './components/Auth.jsx'
 import PlannerDashboard from './components/PlannerDashboard.jsx';
-import SeekerDashboard from './components/SeekerDashboard.jsx';
+// import SeekerDashboard from './components/SeekerDashboard.jsx';
 import { logout, deleteAccount } from './api.js';
 
 function App() {
