@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Auth from './components/Auth.jsx'
 import PlannerDashboard from './components/PlannerDashboard.jsx';
@@ -9,10 +9,22 @@ function App() {
   
   const [user, setUser] = useState(null);
   
+  
+  
 
   function handleLoggedIn(loggedInUser) {
     setUser(loggedInUser);
   }
+
+  useEffect(() => {
+
+    login().then(response => {
+        if (response.success) {
+            setUser(response.user);
+        }
+    });
+
+  }, []);
 
   function handleLogout() {
     

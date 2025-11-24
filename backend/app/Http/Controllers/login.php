@@ -12,9 +12,12 @@ class login extends Controller
     public function login(Request $request){
 
         if ($request->session()->has('user_id')) {
+
+            $user = User::find($request->session()->get('user_id'));
             return response()->json([
                 'message' => 'Already logged in',
-                'success' => false
+                'success' => True,
+                'user' => $user
             ]);
         }
         $data = $request->validate([
