@@ -49,7 +49,10 @@ function App() {
   }
 
   if (!user) {
-    return <Auth onLoggedIn={handleLoggedIn} />;
+    return 
+    <div>
+    <Auth onLoggedIn={handleLoggedIn} />;
+    </div>
   }
 
   
