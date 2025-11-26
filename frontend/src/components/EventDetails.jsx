@@ -51,6 +51,9 @@ function EventDetails() {
     if (isLoading || regLoading || commentLoading) {
         return <div>Loading...</div>;
     }
+    if (!event) {
+        return <div>Loading...</div>;
+    }
 
     function handleEditEvent(eventId, e) {
         e.preventDefault();
