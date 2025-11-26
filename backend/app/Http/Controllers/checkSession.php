@@ -1,8 +1,11 @@
 <?php
 
+namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+
+
 class checkSession extends Controller
 {
     public function checkSession(Request $request)
@@ -23,6 +26,7 @@ class checkSession extends Controller
         return response()->json([
             'message' => 'Not logged in',
             'success' => false,
+            'user' => null
         ]);
     }
 }
