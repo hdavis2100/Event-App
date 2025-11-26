@@ -22,6 +22,11 @@ class getEventComments extends Controller
         }
 
         $eventComments = eventMessage::where('event_id', $eventId)->orderBy('created_at', 'desc')->get();
+
+        foreach ($eventComments as $comment) {
+            $user = User::find($comment->user_id);
+            $comment->name = $user->name;
+        }
         return response()->json([
             'message' => 'Event comments retrieved successfully',
             'eventComments' => $eventComments,

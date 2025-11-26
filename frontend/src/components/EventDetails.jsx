@@ -30,7 +30,7 @@ function EventDetails() {
                 
                 getEventComments(eventId).then(commentData => {
                     if (commentData.success) {
-                        setComments(commentData.comments);  
+                        setComments(commentData.eventComments);  
                     }
                     else {
                         alert('Failed to fetch event comments: ' + commentData.message);
