@@ -95,6 +95,10 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<PlannerDashboard />} />
+        <Route path="/:eventId" element={<EventDetails />} />
+        <Route path="/conversations" element={<Conversations user={user} />} />
+        <Route path="/conversations/:userId" element={<Conversation user={user} />} />
+
       </Routes>
       
       

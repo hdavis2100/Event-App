@@ -24,7 +24,7 @@ class getPrivateMessages extends Controller
         return response()->json([
             'message' => 'Private messages retrieved successfully',
             'privateMessages' => $privateMessages,
-            'success' => true
+            'success' => true,
         ]);
     }
 

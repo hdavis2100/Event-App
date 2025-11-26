@@ -86,6 +86,15 @@ export function getEvents(options = {}) {
     .catch(error => { console.error('Error:', error)});
 }
 
+export function getEventById(eventId) {
+    return fetch(`${baseUrl}/event/${eventId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+    .catch(error => { console.error('Error:', error)});
+}
+
 export function addEvent(data) {
     return fetch(`${baseUrl}/addEvent`, {
         method: 'POST',
@@ -175,6 +184,15 @@ export function sendPrivateMessage(receiverId, data) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .catch(error => { console.error('Error:', error)});
+}
+
+export function getPrivateMessagesWithUser(otherUserId) {
+    return fetch(`${baseUrl}/privateMessages/${otherUserId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json'},
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});

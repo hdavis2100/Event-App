@@ -18,6 +18,8 @@ use App\Http\Controllers\getPrivateMessages;
 use App\Http\Controllers\getSeekerInfo;
 use App\Http\Controllers\getEventComments;
 use App\Http\Controllers\getEventRegistrations;
+use App\Http\Controllers\getEventById;
+use App\Http\Controllers\getPrivateMessagesWithUser;
 
 
 // CSRF Token Route
@@ -46,3 +48,5 @@ Route::get('/privateMessages', [getPrivateMessages::class, 'getMessages']);
 Route::get('/seekerInfo', [getSeekerInfo::class, 'getInfo']);
 Route::get('/eventComments/{eventId}', [getEventComments::class, 'getComments']);
 Route::get('/eventRegistrations/{eventId}', [getEventRegistrations::class, 'getRegistrations']);
+Route::get('/event/{eventId}', [getEventById::class, 'getEventById']);
+Route::get('/privateMessages/{otherUserId}', [getPrivateMessagesWithUser::class, 'getMessagesWithUser']);
