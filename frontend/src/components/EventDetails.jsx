@@ -100,7 +100,7 @@ function EventDetails() {
             </ul>
             <ul>
                 {comments.map(comment => (
-                    <li>{comment.user}: {comment.text}</li>
+                    <li>{comment.name}: {comment.message}</li>
                 ))}
 
             </ul>
