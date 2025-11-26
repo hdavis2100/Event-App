@@ -91,6 +91,7 @@ function App() {
         <span>Welcome, {user.name} ({user.role})</span>
         <nav>
           <Link to="/">Dashboard</Link>
+          <Link to="/conversations">Conversations</Link>
         </nav>
       </header>
       <h1> Event Planner </h1>

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { updateEvent, deleteEvent, getEventById, getEventRegistrations, getEventComments} from '../api.js';
 
@@ -13,7 +13,7 @@ function EventDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [regLoading, setRegLoading] = useState(true);
     const [commentLoading, setCommentLoading] = useState(true);
-    
+    let navigate = useNavigate();
     useEffect(() => {
         getEventById(eventId).then(data => {
             if (data.success) {
@@ -80,6 +80,9 @@ function EventDetails() {
         deleteEvent(eventId).then(response => {
             if (!response.success) {
                 alert('Failed to delete event: ' + response.message);
+            }
+            else {
+                navigate('/');
             }
         });
     }
