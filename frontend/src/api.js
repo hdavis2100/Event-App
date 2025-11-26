@@ -19,6 +19,21 @@ function getCsrfToken() {
     .catch(error => { console.error('Error:', error)});
 }
 
+export function getSession() {
+    return getCsrfToken().then(() => {
+        return fetch(`${baseUrl}/checkSession`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json'},
+        })
+        .then(response => response.json())
+        .catch(error => { console.error('Error:', error)});
+    });
+}
+
+    
+    
+
+
 export function register(data) {
 
     return getCsrfToken().then((csrfToken) => {

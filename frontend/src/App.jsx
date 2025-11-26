@@ -7,14 +7,19 @@ import EventDetails from './components/EventDetails.jsx';
 import Conversations from './components/Conversations.jsx';
 import Conversation from './components/Conversation.jsx';
 // import SeekerDashboard from './components/SeekerDashboard.jsx';
-import { login, logout, deleteAccount } from './api.js';
+import { login, logout, deleteAccount, getSession } from './api.js';
 
 function App() {
   
   const [user, setUser] = useState(null);
   
-  
-  
+  useEffect(() => {
+    getSession().then(session => {
+      if (session && session.user) {
+        setUser(session.user);
+      }
+    });
+  }, []);
 
   function handleLoggedIn(loggedInUser) {
     setUser(loggedInUser);
@@ -43,7 +48,8 @@ function App() {
     });
   }
 
-  if (!user) {
+  if (!user) 
+    {
     return (
     <div>
     <Auth onLoggedIn={handleLoggedIn} />;
