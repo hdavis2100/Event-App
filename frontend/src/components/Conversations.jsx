@@ -72,3 +72,4 @@ function Conversations({ user }) {
 
 
 }
+export default Conversations;
