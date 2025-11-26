@@ -6,7 +6,7 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename="/eventApp/creative-project-module7-512518/frontend/dist/">
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </StrictMode>
