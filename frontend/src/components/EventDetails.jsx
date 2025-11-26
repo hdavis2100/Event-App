@@ -11,6 +11,8 @@ function EventDetails() {
     const [comments, setComments] = useState([]);
     const { eventId } = useParams();  
     const [isLoading, setIsLoading] = useState(true);
+    const [regLoading, setRegLoading] = useState(true);
+    const [commentLoading, setCommentLoading] = useState(true);
     
     useEffect(() => {
         getEventById(eventId).then(data => {
@@ -23,6 +25,7 @@ function EventDetails() {
                     else {
                         alert('Failed to fetch event registrations: ' + regData.message);
                     }
+                    setRegLoading(false);
                 });
                 
                 getEventComments(eventId).then(commentData => {
@@ -32,6 +35,7 @@ function EventDetails() {
                     else {
                         alert('Failed to fetch event comments: ' + commentData.message);
                     }
+                    setCommentLoading(false);
                 });
                 
                 setEvent(data.event);
@@ -44,10 +48,10 @@ function EventDetails() {
         
         });
     }, []);
-    if (isLoading) {
+    if (isLoading || regLoading || commentLoading) {
         return <div>Loading...</div>;
     }
-    
+
     function handleEditEvent(eventId, e) {
         e.preventDefault();
 
