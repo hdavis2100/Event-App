@@ -9,7 +9,7 @@ function EventDetails() {
     const [event, setEvent] = useState(null);
     const [registrations, setRegistrations] = useState([]);
     const [comments, setComments] = useState([]);
-    const {eventId} = useParams();  
+    const { eventId } = useParams();  
     
     useEffect(() => {
         getEventById(eventId).then(data => {
@@ -41,7 +41,7 @@ function EventDetails() {
             }
         
         });
-    }, [eventId]);
+    }, []);
 
     function handleEditEvent(eventId, e) {
         e.preventDefault();
