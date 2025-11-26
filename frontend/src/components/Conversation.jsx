@@ -1,11 +1,9 @@
 import {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { getPrivateMessagesWithUser, sendPrivateMessage } from '../api.js';
-
+import { useParams } from 'react-router-dom';
 function Conversation({ user }) {
     const [messages, setMessages] = useState([]);
-
-    URLSearchParams = new URLSearchParams(window.location.search);
     const { otherUserId } = useParams();
 
     function handleSendMessage(e) {

@@ -3,6 +3,9 @@ import {Routes, Route, Link} from 'react-router-dom'
 import './App.css'
 import Auth from './components/Auth.jsx'
 import PlannerDashboard from './components/PlannerDashboard.jsx';
+import EventDetails from './components/EventDetails.jsx';
+import Conversations from './components/Conversations.jsx';
+import Conversation from './components/Conversation.jsx';
 // import SeekerDashboard from './components/SeekerDashboard.jsx';
 import { login, logout, deleteAccount } from './api.js';
 
@@ -97,7 +100,7 @@ function App() {
         <Route path="/" element={<PlannerDashboard />} />
         <Route path="/:eventId" element={<EventDetails />} />
         <Route path="/conversations" element={<Conversations user={user} />} />
-        <Route path="/conversations/:userId" element={<Conversation user={user} />} />
+        <Route path="/conversations/:otherUserId" element={<Conversation user={user} />} />
 
       </Routes>
       

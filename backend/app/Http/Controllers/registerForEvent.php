@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Registration;
 
 
 class registerForEvent extends Controller

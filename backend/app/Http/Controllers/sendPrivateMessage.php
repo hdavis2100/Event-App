@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\eventMessage;
 use App\Models\Event;
 use App\Models\User;
+use App\Models\privateMessage;
 
 class sendPrivateMessage extends Controller
 {
