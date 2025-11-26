@@ -10,6 +10,7 @@ function EventDetails() {
     const [registrations, setRegistrations] = useState([]);
     const [comments, setComments] = useState([]);
     const { eventId } = useParams();  
+    const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
         getEventById(eventId).then(data => {
@@ -34,6 +35,7 @@ function EventDetails() {
                 });
                 
                 setEvent(data.event);
+                setIsLoading(false);
                 
 
             } else {
@@ -42,7 +44,10 @@ function EventDetails() {
         
         });
     }, []);
-
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    
     function handleEditEvent(eventId, e) {
         e.preventDefault();
 
