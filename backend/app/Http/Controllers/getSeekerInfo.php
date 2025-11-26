@@ -35,6 +35,8 @@ class getSeekerInfo extends Controller
         foreach ($registrations as $registration){
             $event = Event::find($registration->event_id);
             $registration->event_details = $event;
+            $planner = User::find($event->planner_id);
+            $registration->planner = $planner;
         }
 
         return $registrations;

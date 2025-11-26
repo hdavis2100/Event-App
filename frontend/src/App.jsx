@@ -6,7 +6,7 @@ import PlannerDashboard from './components/PlannerDashboard.jsx';
 import EventDetails from './components/EventDetails.jsx';
 import Conversations from './components/Conversations.jsx';
 import Conversation from './components/Conversation.jsx';
-// import SeekerDashboard from './components/SeekerDashboard.jsx';
+import SeekerDashboard from './components/SeekerDashboard.jsx';
 import { login, logout, deleteAccount, getSession } from './api.js';
 
 function App() {
@@ -68,10 +68,14 @@ function App() {
         </header>
 
         <h1> Event Seeker </h1>
-
+        <header>
         <nav>
+
+          <Link to="/">Dashboard</Link>
+          <Link to="/conversations">Conversations</Link>
          
         </nav>
+        </header>
 
         <div>
           
@@ -79,6 +83,13 @@ function App() {
           <button onClick={handleDeleteAccount}>Delete Account</button>
 
         </div>
+        <Routes>
+          <Route path="/" element={<SeekerDashboard/>} />
+          <Route path="/conversations" element={<Conversations user={user} />} />
+          <Route path="/conversations/:otherUserId" element={<Conversation user={user} />} />
+          <Route path="/events/:eventId" element={<SeekerEventDetails user={user} />} />
+          <Route path="/events" element={<EventsPage />} />
+        </Routes>
         
       </div>
     )

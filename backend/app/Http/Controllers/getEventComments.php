@@ -25,7 +25,7 @@ class getEventComments extends Controller
 
         foreach ($eventComments as $comment) {
             $user = User::find($comment->user_id);
-            $comment->name = $user->name;
+            $comment->user = $user;
         }
         return response()->json([
             'message' => 'Event comments retrieved successfully',

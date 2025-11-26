@@ -139,10 +139,11 @@ export function deleteEvent(eventId) {
     .catch(error => { console.error('Error:', error)});
 }
 
-export function registerForEvent(eventId) {
+export function registerForEvent(eventId, data) {
     return fetch(`${baseUrl}/registerForEvent/${eventId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+        body: JSON.stringify(data),
     })
     .then(response => response.json())
     .catch(error => { console.error('Error:', error)});
