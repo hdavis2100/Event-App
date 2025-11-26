@@ -18,7 +18,7 @@ function Conversations({ user }) {
     }, []);
 
 
-    conversations = {};
+    let conversations = {};
 
     for (let msg of messages) {
         let senderId = msg.sender_id;
@@ -43,7 +43,7 @@ function Conversations({ user }) {
     for (let key in conversations) {
         conversations[key].sort((a, b) => new Date(a[2]) - new Date(b[2]));
     }
-    arrConversations = Object.entries(conversations);
+    let arrConversations = Object.entries(conversations);
 
     arrConversations.sort((a, b) => {
         let aLastMsgTime = new Date(a[1][a[1].length - 1][2]);

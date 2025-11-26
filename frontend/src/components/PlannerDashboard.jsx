@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getPlannerInfo, addEvent, updateEvent, deleteEvent, getEventRegistrations} from '../api.js';
-
+import { Link } from 'react-router-dom';
 function PlannerDashboard() {
 
     const [events, setEvents] = useState([]);

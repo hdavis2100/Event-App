@@ -61,7 +61,7 @@ function EventDetails() {
             if (!response.success) {
                 alert('Failed to update event: ' + response.message);
             }
-            loadEvents();
+            
         });
     }
     function handleDeleteEvent(eventId) {
@@ -69,7 +69,6 @@ function EventDetails() {
             if (!response.success) {
                 alert('Failed to delete event: ' + response.message);
             }
-            loadEvents();
         });
     }
 
