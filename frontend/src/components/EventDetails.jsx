@@ -60,7 +60,8 @@ function EventDetails() {
     function handleEditEvent(eventId, e) {
         e.preventDefault();
 
-        if (!e.target.is_private.checked && (!e.target.password || e.target.password.value.length === 0)){
+        
+        if(!e.target.is_private.checked){
             e.target.password.value = "none";
         }
         
