@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\User;
 
 class getEvents extends Controller
 {
@@ -32,6 +33,10 @@ class getEvents extends Controller
         }
 
         $events = $query->get();
+        foreach ($events as $event) {
+            $event->planner = User::find($event->planner_id);
+        }
+
         return response()->json([
             'message' => 'Events retrieved successfully',
             'events' => $events,

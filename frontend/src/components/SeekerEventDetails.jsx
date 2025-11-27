@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { getEventById, registerForEvent, getEventComments, addEventComment, unregisterFromEvent, getEventRegistrations, getSeekerInfo } from '../api.js';
+import { getEventById, registerForEvent, getEventComments, postEventComment, unregisterFromEvent, getEventRegistrations, getSeekerInfo } from '../api.js';
 
 function SeekerEventDetails() {
 
@@ -46,7 +46,7 @@ function SeekerEventDetails() {
     if (!event) {
         return <div>Loading...</div>;
     }
-    function handleRegister(e) {
+    function handleRegisterPrivate(e) {
         e.preventDefault();
         let data = {
             password: e.target.password.value
@@ -54,6 +54,17 @@ function SeekerEventDetails() {
         registerForEvent(eventId, data).then(response => {
             if (response.success) {
                 alert('Successfully registered for event!');
+                setIsRegistered(true);
+            } else {
+                alert('Failed to register for event: ' + response.message);
+            }
+        });
+    }
+    function handleRegister() {
+        registerForEvent(eventId).then(response => {
+            if (response.success) {
+                alert('Successfully registered for event!');
+                setIsRegistered(true);
             } else {
                 alert('Failed to register for event: ' + response.message);
             }
@@ -64,6 +75,7 @@ function SeekerEventDetails() {
         unregisterFromEvent(eventId).then(response => {
             if (response.success) {
                 alert('Successfully unregistered from event!');
+                setIsRegistered(false);
             } else {
                 alert('Failed to unregister from event: ' + response.message);
             }
@@ -72,13 +84,19 @@ function SeekerEventDetails() {
     function handleAddComment(e) {
         e.preventDefault();
         let data = {
-            event_id: eventId,
             comment: e.target.comment.value
         }
         e.target.reset();
-        addEventComment(data).then(response => {
+        postEventComment(eventId, data).then(response => {
             if (response.success) {
-                setComments(prevComments => [...prevComments, response.eventMessage.message]);
+                getEventComments(eventId).then(commentData => {
+                    if (commentData.success) {
+                        setComments(commentData.eventComments);
+                    }
+                    else {
+                        alert('Failed to fetch event comments: ' + commentData.message);
+                    }
+                });
             } else {
                 alert('Failed to add comment: ' + response.message);
             }
@@ -92,7 +110,7 @@ function SeekerEventDetails() {
             <p>Start Time: {new Date(event.start_time).toLocaleString()}</p>
             <p>End Time: {new Date(event.end_time).toLocaleString()}</p>
             {event.is_private && !isRegistered && (
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handleRegisterPrivate}>
                     <input type="password" name="password" placeholder="Event Password" required />
                     <button type="submit">Register for Event</button>
                 </form>

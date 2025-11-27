@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getSeekerInfo } from "../api.js";
 
@@ -24,7 +24,7 @@ function SeekerDashboard() {
             <ul>
                 {events.map(event => (
                     <li>
-                        <Link to={`/${event.event_details.id}`}>{event.event_details.title}</Link>
+                        <Link to={`/events/${event.event_details.id}`}>{event.event_details.title}</Link>
                         <p>Host: <Link to={`/conversations/${event.planner.id}`}>{event.planner.name}</Link></p>
                     </li>
                 ))}

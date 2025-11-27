@@ -73,6 +73,7 @@ function App() {
 
           <Link to="/">Dashboard</Link>
           <Link to="/conversations">Conversations</Link>
+          <Link to="/events">Events</Link>
          
         </nav>
         </header>
@@ -88,7 +89,7 @@ function App() {
           <Route path="/conversations" element={<Conversations user={user} />} />
           <Route path="/conversations/:otherUserId" element={<Conversation user={user} />} />
           <Route path="/events/:eventId" element={<SeekerEventDetails user={user} />} />
-          <Route path="/events" element={<EventsPage />} />
+          <Route path="/events" element={<EventsPage user={user} />} />
         </Routes>
         
       </div>
