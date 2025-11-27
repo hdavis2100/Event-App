@@ -32,9 +32,28 @@ class getEvents extends Controller
             $query->whereDate('start_time', '=', $request->date);
         }
 
-        if ($request->creator){
-            $query->whereFullText(['user_id'], $request->creator);
+        
+        if ($request->creator) {
+            $queryUsers = User::query();
+            $queryUsers->whereFullText('name', $request->creator);
+            $queryUsers = $queryUsers->get();
+            $userIds = [];
+            foreach ($queryUsers as $user) {
+                array_push($userIds, $user->id);
+            }
+            if (count($userIds) > 0) {
+                $query->whereIn('user_id', $userIds);
+            } 
+            else {
+                
+                return response()->json([
+                    'message' => 'Events retrieved successfully',
+                    'events' => [],
+                    'success' => true
+                ]);
+            }
         }
+
 
         $events = $query->get();
         foreach ($events as $event) {
