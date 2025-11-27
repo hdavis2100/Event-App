@@ -27,6 +27,12 @@ class deleteEvent extends Controller
         }
 
         $event = Event::find($eventId);
+        if ($event->user_id !== $userId) {
+            return response()->json([
+                'message' => 'You can only delete your own events',
+                'success' => false
+            ]);
+        }
         if ($event) {
             $event->delete();
             return response()->json([

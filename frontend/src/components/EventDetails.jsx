@@ -98,12 +98,12 @@ function EventDetails() {
             <h3>Registrations:</h3>
             <ul>
                 {registrations.map(reg => (
-                    <li>{reg.name}</li>
+                    <li>{reg.user.name }</li>
                 ))}
             </ul>
             <ul>
                 {comments.map(comment => (
-                    <li>{comment.name}: {comment.message}</li>
+                    <li>{comment.user.name}: {comment.message}</li>
                 ))}
 
             </ul>

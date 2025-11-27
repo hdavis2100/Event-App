@@ -13,7 +13,7 @@ function Conversation({ user }) {
             message: e.target.message.value
         }
         e.target.reset();
-        sendPrivateMessage(data).then(response => {
+        sendPrivateMessage(otherUserId, data).then(response => {
             if (response.success) {
                 setMessages(prevMessages => [...prevMessages, response.message]);
             } else {
@@ -29,7 +29,7 @@ function Conversation({ user }) {
                 alert('Failed to fetch private messages: ' + data.message);
             }
         });
-    }, [otherUserId], [messages]);
+    },  [messages]);
     return (
         <div>
             <h2>Conversation with User {otherUserId}</h2>

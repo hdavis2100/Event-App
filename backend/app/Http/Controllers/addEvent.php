@@ -35,7 +35,7 @@ class addEvent extends Controller
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
             'is_private' => 'required|boolean',
-            'password' => 'nullable|string|max:255',
+            'password' => 'required_if:is_private,true|string|max:255',
         ]);
 
         if ($validator->fails()) {

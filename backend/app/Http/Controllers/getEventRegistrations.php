@@ -16,8 +16,14 @@ class getEventRegistrations extends Controller
                 'success' => false
             ]);
         }
+
         
         $registrations = Registration::where('event_id', $eventId)->get();
+
+        foreach ($registrations as $registration) {
+            $user = $registration->user;
+            $registration->user = $user;
+        } 
 
         return response()->json([
             'message' => 'Event registrations retrieved successfully',

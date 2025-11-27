@@ -84,7 +84,7 @@ function SeekerEventDetails() {
     function handleAddComment(e) {
         e.preventDefault();
         let data = {
-            comment: e.target.comment.value
+            message: e.target.comment.value
         }
         e.target.reset();
         postEventComment(eventId, data).then(response => {

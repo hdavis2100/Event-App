@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class updateEvent extends Controller
 {
@@ -35,6 +36,12 @@ class updateEvent extends Controller
                 'success' => false
             ]);
         }
+        if ($event->user_id !== $id) {
+            return response()->json([
+                'message' => 'You can only update your own events',
+                'success' => false
+            ]);
+        }
 
         $validator = Validator::make($request->all(), [
             'title' => 'sometimes|required|string|max:255',
@@ -43,7 +50,7 @@ class updateEvent extends Controller
             'start_time' => 'sometimes|required|date',
             'end_time' => 'sometimes|required|date|after_or_equal:start_time',
             'is_private' => 'sometimes|required|boolean',
-            'password' => 'sometimes|nullable|string|max:255',
+            'password' => 'sometimes|required_if:is_private,true|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -55,6 +62,18 @@ class updateEvent extends Controller
         }
 
         $data = $validator->validated();
+        if (isset($data['is_private']) && $data['is_private']) {
+            if (isset($data['password'])) {
+                $data['password'] = Hash::make($data['password']);
+            } else {
+                return response()->json([
+                    'message' => 'Password is required for private events',
+                    'success' => false
+                ]);
+            }
+        } else {
+            $data['password'] = null;
+        }
 
         $event->update($data);
 
