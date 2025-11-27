@@ -34,8 +34,9 @@ class getEvents extends Controller
 
         $events = $query->get();
         foreach ($events as $event) {
-            $event->planner = User::find($event->planner_id);
+            $event->planner = User::find($event->user_id);
         }
+
 
         return response()->json([
             'message' => 'Events retrieved successfully',
