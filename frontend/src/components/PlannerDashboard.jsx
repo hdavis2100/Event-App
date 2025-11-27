@@ -28,7 +28,7 @@ function PlannerDashboard() {
 
     function handleCreateEvent(e) {
         e.preventDefault();
-        let password = "";
+        let password = "none";
 
         if (e.target.is_private.checked && e.target.password && e.target.password.value.length > 0){
             password = e.target.password.value;

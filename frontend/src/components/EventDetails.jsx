@@ -58,15 +58,10 @@ function EventDetails() {
     function handleEditEvent(eventId, e) {
         e.preventDefault();
 
-        let password = "";
-
-        if (e.target.is_private.checked && e.target.password && e.target.password.value.length > 0){
-            password = e.target.password.value;
+        if (!e.target.is_private.checked && (!e.target.password || e.target.password.value.length === 0)){
+            e.target.password.value = "none";
         }
-        if (e.target.is_private.checked && (!e.target.password || e.target.password.value.length === 0)){
-            alert("Private events must have a password.");
-            return;
-        }
+        
 
         let data = {
             title: e.target.title.value,
@@ -75,7 +70,7 @@ function EventDetails() {
             start_time: e.target.start_time.value,
             end_time: e.target.end_time.value,
             is_private: e.target.is_private.checked,
-            password: password
+            password: e.target.password.value
         }
         e.target.reset()
 
