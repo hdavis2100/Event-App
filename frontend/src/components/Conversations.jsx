@@ -24,17 +24,18 @@ function Conversations({ user }) {
         let senderId = msg.sender_id;
         let receiverId = msg.receiver_id;
         let message = msg.message;
+        let otherUser = msg.otherUser;
 
         if (senderId === user.id) {
             if (!conversations[receiverId]) {
                 conversations[receiverId] = [];
             }
-            conversations[receiverId].push([message, 'sent', message.created_at]);
+            conversations[receiverId].push([message, 'sent', message.created_at, otherUser]);
         } else if (receiverId === user.id) {
             if (!conversations[senderId]) {
                 conversations[senderId] = [];
             }
-            conversations[senderId].push([message, 'received', message.created_at]);
+            conversations[senderId].push([message, 'received', message.created_at, otherUser]);
 
 
         }
@@ -57,9 +58,9 @@ function Conversations({ user }) {
             <ul>
                 {arrConversations.map(([otherUserId, msgs]) => (
                     <li >
-                        <Link to={`/conversations/${otherUserId}`}> Conversation with User {msgs[0].otherUser.name} </Link>
+                        <Link to={`/conversations/${otherUserId}`}> Conversation with User {msgs[0][3].name} </Link>
                         {msgs[msgs.length - 1][1] === 'sent' && <p> {user.name} : {msgs[msgs.length - 1][0]}</p>}
-                        {msgs[msgs.length - 1][1] === 'received' && <p> User {msgs[0].otherUser.name} : {msgs[msgs.length - 1][0]}</p>}
+                        {msgs[msgs.length - 1][1] === 'received' && <p> User {msgs[0][3].name} : {msgs[msgs.length - 1][0]}</p>}
 
                     </li>
                 ))}
