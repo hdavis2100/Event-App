@@ -23,6 +23,13 @@ class getEventById extends Controller
                 'success' => false
             ]);
         }
+        if ($event->is_private && !Hash::check($request->password, $event->password)) {
+            
+            return response()->json([
+                'success'=>false,
+                'message'=>'Password required'
+            ]);
+        }
 
         return response()->json([
             'message' => 'Event retrieved successfully',

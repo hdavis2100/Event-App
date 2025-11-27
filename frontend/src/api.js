@@ -80,7 +80,7 @@ export function deleteAccount() {
 
 export function getEvents(options = {}) {
     
-    let {search, date} = options;
+    let {search, date, creator} = options;
     let url = `${baseUrl}/events`;
     let params = [];
 
@@ -89,6 +89,9 @@ export function getEvents(options = {}) {
     }
     if (date) {
         params.push(`date=${encodeURIComponent(date)}`);
+    }
+    if (creator) {
+        params.push(`creator=${encodeURIComponent(creator)}`);
     }
     if (params.length > 0) {
         url += `?${params.join('&')}`;

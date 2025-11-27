@@ -32,10 +32,15 @@ class getEvents extends Controller
             $query->whereDate('start_time', '=', $request->date);
         }
 
+        if ($request->creator){
+            $query->whereFullText(['user_id'], $request->creator);
+        }
+
         $events = $query->get();
         foreach ($events as $event) {
             $event->planner = User::find($event->user_id);
         }
+
 
 
         return response()->json([

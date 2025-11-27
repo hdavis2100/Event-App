@@ -27,7 +27,7 @@ class registerForEvent extends Controller
 
         $event = Event::find($eventId);
         if ($event->is_private) {
-            if (!hash::check($password, $event->password)) {
+            if (!Hash::check($password, $event->password)) {
                 return response()->json([
                     'message' => 'Incorrect password for private event',
                     'success' => false

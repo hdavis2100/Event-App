@@ -11,10 +11,11 @@ function EventsPage({user}) {
     const [eventsLoading, setEventsLoading] = useState(true);
     const date = searchParams.get('date');
     const search = searchParams.get('search');
+    const creator = searchParams.get('creator');
     let navigate = useNavigate();
     
     useEffect(() => {
-        getEvents({search, date}).then(data => {
+        getEvents({search, date, creator}).then(data => {
             if (data.success){
                 setEvents(data.events);
                 setEventsLoading(false);
@@ -26,10 +27,13 @@ function EventsPage({user}) {
         event.preventDefault();
         let date = event.target.date.value;
         let search = event.target.search.value;
+        let creator = event.target.creator.value;
+
         const params = new URLSearchParams();
        
         if (date) params.append('date', date);
         if (search) params.append('search', search);
+        if (creator) params.append('creator', creator);
         navigate(`/events?${params.toString()}`);
     }
 
@@ -44,6 +48,10 @@ function EventsPage({user}) {
                 <label>
                     Description:
                     <input type="text" name="search" defaultValue={search} />
+                </label>
+                <label>
+                    Creator:
+                    <input type="text" name="creator" defaultValue={creator} />
                 </label>
                 <button type="submit">Search</button>
             </form>
