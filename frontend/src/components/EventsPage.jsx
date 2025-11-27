@@ -11,7 +11,7 @@ function EventsPage({user}) {
     const [eventsLoading, setEventsLoading] = useState(true);
     const date = searchParams.get('date');
     const description = searchParams.get('description');
-    
+    let navigate = useNavigate();
     
     useEffect(() => {
         getEvents({date, description}).then(data => {
