@@ -8,6 +8,7 @@ function EventsPage({user}) {
 
     const [searchParams] = useSearchParams();
     const [events, setEvents] = useState([]);
+    const [eventsLoading, setEventsLoading] = useState(true);
     const date = searchParams.get('date');
     const description = searchParams.get('description');
     
@@ -16,6 +17,7 @@ function EventsPage({user}) {
         getEvents({date, description}).then(data => {
             if (data.success){
                 setEvents(data.events);
+                setEventsLoading(false);
             }
         });
     }, [date, description]);
