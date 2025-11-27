@@ -13,6 +13,7 @@ function EventDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [regLoading, setRegLoading] = useState(true);
     const [commentLoading, setCommentLoading] = useState(true);
+    const [grabUpdate, setGrabUpdate] = useState(false);
     let navigate = useNavigate();
     useEffect(() => {
         getEventById(eventId).then(data => {
@@ -45,9 +46,10 @@ function EventDetails() {
             } else {
                 alert('Failed to fetch event details: ' + data.message);
             }
+            
         
         });
-    }, []);
+    }, [grabUpdate]);
     if (isLoading || regLoading || commentLoading) {
         return <div>Loading...</div>;
     }
@@ -77,6 +79,9 @@ function EventDetails() {
         updateEvent(eventId, data).then(response => {
             if (!response.success) {
                 alert('Failed to update event: ' + response.message);
+            }
+            else {
+                setGrabUpdate(!grabUpdate);
             }
             
         });
