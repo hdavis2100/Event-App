@@ -7,6 +7,8 @@ import EventDetails from './components/EventDetails.jsx';
 import Conversations from './components/Conversations.jsx';
 import Conversation from './components/Conversation.jsx';
 import SeekerDashboard from './components/SeekerDashboard.jsx';
+import SeekerEventDetails from './components/SeekerEventDetails.jsx';
+import EventsPage from './components/EventsPage.jsx';
 import { login, logout, deleteAccount, getSession } from './api.js';
 
 function App() {
