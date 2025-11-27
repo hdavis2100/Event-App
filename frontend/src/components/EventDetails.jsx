@@ -126,9 +126,9 @@ function EventDetails() {
                 <br/>
                 <input type="text" name="location" defaultValue={event.location} placeholder="Event Location"/>
                 <br/>
-                <input type="datetime-local" name="start_time" defaultValue={event.start_time} placeholder="Start Time"/>
+                <input type="datetime-local" name="start_time" defaultValue={ new Date(event.start_time).toISOString().slice(0,16)} placeholder="Start Time"/>
                 <br/>
-                <input type="datetime-local" name="end_time" defaultValue={event.end_time} placeholder="End Time"/>
+                <input type="datetime-local" name="end_time" defaultValue={ new Date(event.end_time).toISOString().slice(0,16)} placeholder="End Time"/>
                 <br/>
                 <input type="checkbox" name="is_private" defaultChecked={event.is_private}/> Private Event
                 <br/>
