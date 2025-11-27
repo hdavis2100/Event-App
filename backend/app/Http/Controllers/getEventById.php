@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 class getEventById extends Controller
 {
     public function getEventById(Request $request, $eventId){
@@ -23,13 +24,7 @@ class getEventById extends Controller
                 'success' => false
             ]);
         }
-        if ($event->is_private && !Hash::check($request->password, $event->password)) {
-            
-            return response()->json([
-                'success'=>false,
-                'message'=>'Password required'
-            ]);
-        }
+       
 
         return response()->json([
             'message' => 'Event retrieved successfully',

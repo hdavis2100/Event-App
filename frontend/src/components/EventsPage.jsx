@@ -21,7 +21,7 @@ function EventsPage({user}) {
                 setEventsLoading(false);
             }
         });
-    }, [date, search]);
+    }, [date, search, creator]);
 
     function handleSearch(event) {
         event.preventDefault();
