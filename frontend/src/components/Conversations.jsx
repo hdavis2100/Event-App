@@ -57,9 +57,9 @@ function Conversations({ user }) {
             <ul>
                 {arrConversations.map(([otherUserId, msgs]) => (
                     <li >
-                        <Link to={`/conversations/${otherUserId}`}> Conversation with User {otherUserId} </Link>
+                        <Link to={`/conversations/${otherUserId}`}> Conversation with User {msgs[0].otherUser.name} </Link>
                         {msgs[msgs.length - 1][1] === 'sent' && <p> {user.name} : {msgs[msgs.length - 1][0]}</p>}
-                        {msgs[msgs.length - 1][1] === 'received' && <p> User {otherUserId} : {msgs[msgs.length - 1][0]}</p>}
+                        {msgs[msgs.length - 1][1] === 'received' && <p> User {msgs[0].otherUser.name} : {msgs[msgs.length - 1][0]}</p>}
 
                     </li>
                 ))}

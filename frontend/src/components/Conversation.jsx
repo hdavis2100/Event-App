@@ -5,6 +5,9 @@ import { useParams } from 'react-router-dom';
 function Conversation({ user }) {
     const [messages, setMessages] = useState([]);
     const { otherUserId } = useParams();
+    const [otherUser, setOtherUser] = useState(null);
+
+
 
     function handleSendMessage(e) {
         e.preventDefault();
@@ -24,6 +27,7 @@ function Conversation({ user }) {
         getPrivateMessagesWithUser(otherUserId).then(data => {
             if (data.success) {
                 setMessages(data.privateMessages);
+                setOtherUser(data.otherUser);
             } else {
                 alert('Failed to fetch private messages: ' + data.message);
             }
@@ -35,7 +39,7 @@ function Conversation({ user }) {
             <ul>
                 {messages.map((msg) => (
                     <li> 
-                        <strong>{msg.sender_id === user.id ? 'You' : `User ${otherUserId}` }:</strong> {msg.message} <em>({new Date(msg.created_at).toLocaleString()})</em>
+                        <strong>{msg.sender_id === user.id ? 'You' : `User ${otherUser.name}` }:</strong> {msg.message} <em>({new Date(msg.created_at).toLocaleString()})</em>
                         
                     </li>
                 ))}

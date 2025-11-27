@@ -21,6 +21,9 @@ class getPrivateMessages extends Controller
 
         $userId = $request->session()->get('user_id');
         $privateMessages = privateMessage::where('sender_id', $userId)->orWhere('receiver_id', $userId)->orderBy('created_at', 'desc')->get();
+        foreach ($privateMessages as $message) {
+            $message->otherUser = User::find($message->sender_id == $userId ? $message->receiver_id : $message->sender_id);
+        }
         return response()->json([
             'message' => 'Private messages retrieved successfully',
             'privateMessages' => $privateMessages,

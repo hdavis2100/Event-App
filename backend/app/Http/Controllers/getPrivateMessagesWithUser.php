@@ -21,10 +21,11 @@ class getPrivateMessagesWithUser extends Controller
         $sentMessages = privateMessage::where('sender_id', $userId)->where('receiver_id', $otherUserId);
         $receivedMessages = privateMessage::where('sender_id', $otherUserId)->where('receiver_id', $userId);
         $privateMessages = $sentMessages->union($receivedMessages)->orderBy('created_at', 'desc')->get();
-
+        $otherUser = User::find($otherUserId);
         return response()->json([
             'message' => 'Private messages with user retrieved successfully',
             'privateMessages' => $privateMessages,
+            'otherUser' => $otherUser,
             'success' => true,
         ]);
     }
