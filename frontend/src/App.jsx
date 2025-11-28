@@ -65,20 +65,16 @@ function App() {
     return (
       <div>
         <header>
+          <nav>
+            <Link to="/">Dashboard</Link>
+            <Link to="/conversations">Conversations</Link>
+            <Link to="/events">Events</Link>
+          </nav>
 
           <span>Welcome, {user.name} ({user.role})</span>
         </header>
 
-        <h1> Event Seeker </h1>
-        <header>
-        <nav>
-
-          <Link to="/">Dashboard</Link>
-          <Link to="/conversations">Conversations</Link>
-          <Link to="/events">Events</Link>
-         
-        </nav>
-        </header>
+        
 
         <div>
           
@@ -108,7 +104,7 @@ function App() {
           <Link to="/conversations">Conversations</Link>
         </nav>
       </header>
-      <h1> Event Planner </h1>
+      
 
       
       <div>

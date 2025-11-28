@@ -32,7 +32,7 @@ function Conversation({ user }) {
                 alert('Failed to fetch private messages: ' + data.message);
             }
         });
-    },  [messages]);
+    },  [otherUserId]);
     return (
         <div>
             <h2>Conversation with User {otherUserId}</h2>

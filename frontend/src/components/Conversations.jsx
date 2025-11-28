@@ -30,12 +30,12 @@ function Conversations({ user }) {
             if (!conversations[receiverId]) {
                 conversations[receiverId] = [];
             }
-            conversations[receiverId].push([message, 'sent', message.created_at, otherUser]);
+            conversations[receiverId].push([message, 'sent', msg.created_at, otherUser]);
         } else if (receiverId === user.id) {
             if (!conversations[senderId]) {
                 conversations[senderId] = [];
             }
-            conversations[senderId].push([message, 'received', message.created_at, otherUser]);
+            conversations[senderId].push([message, 'received', msg.created_at, otherUser]);
 
 
         }
