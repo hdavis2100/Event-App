@@ -10,11 +10,11 @@ import SeekerDashboard from './components/SeekerDashboard.jsx';
 import SeekerEventDetails from './components/SeekerEventDetails.jsx';
 import EventsPage from './components/EventsPage.jsx';
 import { login, logout, deleteAccount, getSession } from './api.js';
-
+import { useNavigate } from 'react-router-dom';
 function App() {
   
   const [user, setUser] = useState(null);
-  
+  const navigate = useNavigate();
   useEffect(() => {
     getSession().then(session => {
       if (session && session.user) {
@@ -30,7 +30,7 @@ function App() {
   
 
   function handleLogout() {
-    
+    navigate('/');
     logout().then(response => {
         if (response.success) {
             setUser(null);
@@ -41,6 +41,7 @@ function App() {
   }
 
   function handleDeleteAccount() {
+    navigate('/');
     deleteAccount().then(response => {
         if (response.success) {
             setUser(null);
