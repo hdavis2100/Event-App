@@ -112,6 +112,7 @@ function EventDetails() {
                     <li>{reg.user.name }</li>
                 ))}
             </ul>
+            <h3>Comments:</h3>
             <ul>
                 {comments.map(comment => (
                     <li>{comment.user.name}: {comment.message}</li>
