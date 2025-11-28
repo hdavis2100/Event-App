@@ -1,7 +1,7 @@
-import { useEffect, useState} from 'react'
-import {Routes, Route, Link} from 'react-router-dom'
-import './App.css'
-import Auth from './components/Auth.jsx'
+import { useEffect, useState } from 'react';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import './App.css';
+import Auth from './components/Auth.jsx';
 import PlannerDashboard from './components/PlannerDashboard.jsx';
 import EventDetails from './components/EventDetails.jsx';
 import Conversations from './components/Conversations.jsx';
@@ -9,14 +9,14 @@ import Conversation from './components/Conversation.jsx';
 import SeekerDashboard from './components/SeekerDashboard.jsx';
 import SeekerEventDetails from './components/SeekerEventDetails.jsx';
 import EventsPage from './components/EventsPage.jsx';
-import { login, logout, deleteAccount, getSession } from './api.js';
-import { useNavigate } from 'react-router-dom';
+import { logout, deleteAccount, getSession } from './api.js';
+
 function App() {
-  
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
-    getSession().then(session => {
+    getSession().then((session) => {
       if (session && session.user) {
         setUser(session.user);
       }
@@ -27,105 +27,124 @@ function App() {
     setUser(loggedInUser);
   }
 
-  
-
   function handleLogout() {
     navigate('/');
-    logout().then(response => {
-        if (response.success) {
-            setUser(null);
-        } else {
-            alert('Logout failed: ' + response.message);
-        }
+    logout().then((response) => {
+      if (response.success) {
+        setUser(null);
+      } else {
+        alert('Logout failed: ' + response.message);
+      }
     });
   }
 
   function handleDeleteAccount() {
+    if (
+      !window.confirm(
+        'Delete your account and all associated data? This cannot be undone.'
+      )
+    ) {
+      return;
+    }
+
     navigate('/');
-    deleteAccount().then(response => {
-        if (response.success) {
-            setUser(null);
-        } else {
-            alert('Account deletion failed: ' + response.message);
-        }
+    deleteAccount().then((response) => {
+      if (response.success) {
+        setUser(null);
+      } else {
+        alert('Account deletion failed: ' + response.message);
+      }
     });
   }
 
-  if (!user) 
-    {
+  // Unauthenticated state
+  if (!user) {
     return (
-    <div>
-    <Auth onLoggedIn={handleLoggedIn} />;
-    </div>
-
-    )
-  }
-
-  
-  if (user.role === 'seeker') {
-    return (
-      <div>
-        <header>
-          <nav>
-            <Link to="/">Dashboard</Link>
-            <Link to="/conversations">Conversations</Link>
-            <Link to="/events">Events</Link>
-          </nav>
-
-          <span>Welcome, {user.name} ({user.role})</span>
-        </header>
-
-        
-
-        <div>
-          
-          <button onClick={handleLogout}>Logout</button>
-          <button onClick={handleDeleteAccount}>Delete Account</button>
-
-        </div>
-        <Routes>
-          <Route path="/" element={<SeekerDashboard/>} />
-          <Route path="/conversations" element={<Conversations user={user} />} />
-          <Route path="/conversations/:otherUserId" element={<Conversation user={user} />} />
-          <Route path="/events/:eventId" element={<SeekerEventDetails user={user} />} />
-          <Route path="/events" element={<EventsPage user={user} />} />
-        </Routes>
-        
+      <div className="app-shell app-shell--auth">
+        <main className="app-main">
+          <Auth onLoggedIn={handleLoggedIn} />
+        </main>
       </div>
-    )
+    );
   }
+
+  const isSeeker = user.role === 'seeker';
 
   return (
-    <div>
+    <div className="app-shell">
+      <header className="app-header">
+        <div className="app-brand">
+          <div className="app-logo">EB</div>
+          <div>
+            <h1 className="brand-title">EventBridge</h1>
+            <p className="brand-subtitle">
+              {isSeeker
+                ? 'Discover and register for events'
+                : 'Plan events and coordinate with attendees'}
+            </p>
+          </div>
+        </div>
 
-      <header>
-        <span>Welcome, {user.name} ({user.role})</span>
-        <nav>
-          <Link to="/">Dashboard</Link>
-          <Link to="/conversations">Conversations</Link>
+        <nav className="app-nav">
+          <Link className="app-nav__link" to="/">
+            Dashboard
+          </Link>
+          <Link className="app-nav__link" to="/conversations">
+            Conversations
+          </Link>
+          {isSeeker && (
+            <Link className="app-nav__link" to="/events">
+              Events
+            </Link>
+          )}
         </nav>
+
+        <div className="app-header__user">
+          <span className="chip chip--user">
+            {user.name} <span className="chip__role">({user.role})</span>
+          </span>
+          <button type="button" className="btn btn-ghost" onClick={handleLogout}>
+            Logout
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger-outline"
+            onClick={handleDeleteAccount}
+          >
+            Delete account
+          </button>
+        </div>
       </header>
-      
 
-      
-      <div>
-          
-        <button onClick={handleLogout}>Logout</button>
-        <button onClick={handleDeleteAccount}>Delete Account</button>
-        
-      </div>
-      <Routes>
-        <Route path="/" element={<PlannerDashboard />} />
-        <Route path="/:eventId" element={<EventDetails />} />
-        <Route path="/conversations" element={<Conversations user={user} />} />
-        <Route path="/conversations/:otherUserId" element={<Conversation user={user} />} />
-
-      </Routes>
-      
-      
+      <main className="app-main">
+        {isSeeker ? (
+          <Routes>
+            <Route path="/" element={<SeekerDashboard />} />
+            <Route path="/conversations" element={<Conversations user={user} />} />
+            <Route
+              path="/conversations/:otherUserId"
+              element={<Conversation user={user} />}
+            />
+            <Route path="/events" element={<EventsPage user={user} />} />
+            <Route
+              path="/events/:eventId"
+              element={<SeekerEventDetails user={user} />}
+            />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/" element={<PlannerDashboard />} />
+            <Route path="/:eventId" element={<EventDetails />} />
+            <Route path="/conversations" element={<Conversations user={user} />} />
+            <Route
+              path="/conversations/:otherUserId"
+              element={<Conversation user={user} />}
+            />
+          </Routes>
+        )}
+      </main>
     </div>
-  )
+  );
 }
 
-
-export default App
+export default App;

@@ -1,77 +1,145 @@
-import { useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { getEvents } from '../api.js';
-import { useNavigate } from 'react-router-dom';
 
-function EventsPage({user}) {
+function EventsPage({ user }) {
+  const [searchParams] = useSearchParams();
+  const [events, setEvents] = useState([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
+  const navigate = useNavigate();
 
-    const [searchParams] = useSearchParams();
-    const [events, setEvents] = useState([]);
-    const [eventsLoading, setEventsLoading] = useState(true);
-    const date = searchParams.get('date');
-    const search = searchParams.get('search');
-    const creator = searchParams.get('creator');
-    let navigate = useNavigate();
-    
-    useEffect(() => {
-        getEvents({search, date, creator}).then(data => {
-            if (data.success){
-                setEvents(data.events);
-                setEventsLoading(false);
-            }
-        });
-    }, [date, search, creator]);
+  const date = searchParams.get('date') || '';
+  const search = searchParams.get('search') || '';
+  const creator = searchParams.get('creator') || '';
 
-    function handleSearch(event) {
-        event.preventDefault();
-        let date = event.target.date.value;
-        let search = event.target.search.value;
-        let creator = event.target.creator.value;
+  useEffect(() => {
+    setEventsLoading(true);
+    getEvents({ search, date, creator }).then((data) => {
+      if (data.success) {
+        setEvents(data.events || []);
+      } else {
+        alert('Failed to fetch events: ' + data.message);
+        setEvents([]);
+      }
+      setEventsLoading(false);
+    });
+  }, [date, search, creator]);
 
-        const params = new URLSearchParams();
-       
-        if (date) params.append('date', date);
-        if (search) params.append('search', search);
-        if (creator) params.append('creator', creator);
-        navigate(`/events?${params.toString()}`);
-    }
+  function handleSearch(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const dateValue = form.date.value;
+    const searchValue = form.search.value;
+    const creatorValue = form.creator.value;
 
-    return (
-        <div>
+    const params = new URLSearchParams();
+    if (dateValue) params.set('date', dateValue);
+    if (searchValue) params.set('search', searchValue);
+    if (creatorValue) params.set('creator', creatorValue);
 
-            <form onSubmit={handleSearch} className='search-form'>
-                <label>
-                    Date:
-                    <input type="date" name="date" defaultValue={date} />
-                </label>
-                <label>
-                    Description:
-                    <input type="text" name="search" defaultValue={search} />
-                </label>
-                <label>
-                    Creator:
-                    <input type="text" name="creator" defaultValue={creator} />
-                </label>
-                <button type="submit">Search</button>
-            </form>
-            
+    navigate(`/events${params.toString() ? `?${params.toString()}` : ''}`);
+  }
 
+  const hasFilters = date || search || creator;
 
-            <h2>Events</h2>
-
-            <ul>
-                {events.map(event => (
-                    <li>
-                        <Link to={`/events/${event.id}`}>{event.title}</Link>
-                        <p>{event.title}</p>
-                        <p>Start Time: {new Date(event.start_time).toLocaleString()}</p>
-                        <p>End Time: {new Date(event.end_time).toLocaleString()}</p>
-                        <p>Host: <Link to={`/conversations/${event.planner.id}`}>{event.planner.name}</Link></p>
-                    </li>
-                ))}
-            </ul>
+  return (
+    <div className="page">
+      <section className="card">
+        <div className="card__header">
+          <h2 className="card__title">Browse public events</h2>
+          <p className="card__meta">
+            Filter by date, description, or creator to find what you&apos;re
+            looking for.
+          </p>
         </div>
-    );
+
+        <form onSubmit={handleSearch} className="search-form">
+          <label>
+            Date
+            <input type="date" name="date" defaultValue={date} />
+          </label>
+          <label>
+            Description
+            <input
+              type="text"
+              name="search"
+              defaultValue={search}
+              placeholder="e.g. networking, workshop, coffee chat..."
+            />
+          </label>
+          <label>
+            Creator
+            <input
+              type="text"
+              name="creator"
+              defaultValue={creator}
+              placeholder="Planner name"
+            />
+          </label>
+          <button type="submit" className="btn btn-primary">
+            Search
+          </button>
+        </form>
+
+        {hasFilters && (
+          <p className="text-muted">
+            Active filters:
+            {date && <> date = {date}</>}
+            {search && <> • description contains &quot;{search}&quot;</>}
+            {creator && <> • creator contains &quot;{creator}&quot;</>}
+          </p>
+        )}
+      </section>
+
+      <section className="card card--subtle">
+        <div className="card__header">
+          <h2 className="card__title">Events</h2>
+          <p className="card__meta">
+            {eventsLoading
+              ? 'Loading events...'
+              : events.length === 0
+              ? 'No events matched your filters.'
+              : `Found ${events.length} event${
+                  events.length > 1 ? 's' : ''
+                }`}
+          </p>
+        </div>
+
+        {eventsLoading ? (
+          <p className="text-muted">Fetching events from the server...</p>
+        ) : events.length === 0 ? (
+          <p className="text-muted">
+            Try clearing some filters or searching for a different keyword.
+          </p>
+        ) : (
+          <ul className="list--events">
+            {events.map((event) => (
+              <li key={event.id}>
+                <div className="event-row__main">
+                  <h3>
+                    <Link to={`/events/${event.id}`}>{event.title}</Link>
+                  </h3>
+                  <p>{event.description}</p>
+                  <p>
+                    {new Date(event.start_time).toLocaleString()} –{' '}
+                    {new Date(event.end_time).toLocaleString()}
+                  </p>
+                </div>
+                <div className="event-row__meta">
+                  <span className="text-muted">
+                    Host{' '}
+                    <Link to={`/conversations/${event.planner.id}`}>
+                      {event.planner.name}
+                    </Link>
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
 }
+
 export default EventsPage;

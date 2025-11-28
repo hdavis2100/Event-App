@@ -1,118 +1,170 @@
 import { useEffect, useState } from 'react';
-import { getPlannerInfo, addEvent, updateEvent, deleteEvent, getEventRegistrations} from '../api.js';
 import { Link } from 'react-router-dom';
+import { getPlannerInfo, addEvent } from '../api.js';
+
 function PlannerDashboard() {
+  const [events, setEvents] = useState([]);
 
-    const [events, setEvents] = useState([]);
-    
+  function loadEvents() {
+    getPlannerInfo().then((data) => {
+      if (data.success) {
+        setEvents(data.events || []);
+      } else {
+        alert('Failed to fetch planner events: ' + data.message);
+      }
+    });
+  }
 
-    function loadEvents() {
-        getPlannerInfo().then(data => {
-            if (data.success){
-                setEvents(data.events);
-            }
-            else {
-                alert('Failed to fetch planner events: ' + data.message);
-            }
-        });
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  function handleCreateEvent(e) {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const isPrivate = form.is_private.checked;
+    const passwordValue = form.password.value.trim();
+
+    if (isPrivate && !passwordValue) {
+      alert('Private events must have a password.');
+      return;
     }
 
-    
-    useEffect(() => {
+    const payload = {
+      title: form.title.value,
+      description: form.description.value,
+      location: form.location.value,
+      start_time: form.start_time.value,
+      end_time: form.end_time.value,
+      is_private: isPrivate,
+      password: isPrivate ? passwordValue : 'none',
+    };
+
+    addEvent(payload).then((response) => {
+      if (!response.success) {
+        alert('Failed to add event: ' + response.message);
+      } else {
+        form.reset();
         loadEvents();
-    }, []);
+      }
+    });
+  }
 
+  const sortedEvents = [...events].sort(
+    (a, b) => new Date(a.start_time) - new Date(b.start_time)
+  );
 
-    
+  return (
+    <div className="page">
+      <div className="page-grid">
+        <section className="card">
+          <div className="card__header">
+            <h2 className="card__title">Create a new event</h2>
+            <p className="card__meta">
+              Define the basics, then share it with seekers.
+            </p>
+          </div>
 
+          <form onSubmit={handleCreateEvent}>
+            <label>
+              Title
+              <input
+                type="text"
+                name="title"
+                placeholder="Team social, meetup, workshop..."
+                required
+              />
+            </label>
+            <label>
+              Description
+              <textarea
+                name="description"
+                placeholder="What is this event about?"
+                required
+              />
+            </label>
+            <label>
+              Location
+              <input
+                type="text"
+                name="location"
+                placeholder="Online / City, Venue"
+                required
+              />
+            </label>
+            <label>
+              Start time
+              <input type="datetime-local" name="start_time" required />
+            </label>
+            <label>
+              End time
+              <input type="datetime-local" name="end_time" required />
+            </label>
+            <label className="field--inline">
+              <input type="checkbox" name="is_private" />
+              <span>Private event (requires a password)</span>
+            </label>
+            <label>
+              Password (only if private)
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter a password for invite-only access"
+              />
+            </label>
 
-    function handleCreateEvent(e) {
-        e.preventDefault();
-        let password = "none";
+            <button type="submit" className="btn btn-primary">
+              Create event
+            </button>
+          </form>
+        </section>
 
-        if (e.target.is_private.checked && e.target.password && e.target.password.value.length > 0){
-            password = e.target.password.value;
+        <section className="card card--subtle">
+          <div className="card__header">
+            <h2 className="card__title">Your events</h2>
+            <p className="card__meta">
+              {sortedEvents.length === 0
+                ? 'No events created yet.'
+                : `Showing ${sortedEvents.length} event${
+                    sortedEvents.length > 1 ? 's' : ''
+                  }`}
+            </p>
+          </div>
 
-        }
-        
-        if (e.target.is_private.checked && (!e.target.password || e.target.password.value.length === 0)){
-            alert("Private events must have a password.");
-            return;
-        }
-        
-
-
-        
-        let data = {
-            title: e.target.title.value,
-            description: e.target.description.value,
-            location: e.target.location.value,
-            start_time: e.target.start_time.value,
-            end_time: e.target.end_time.value,
-            is_private: e.target.is_private.checked,
-            password: password
-
-        }
-        e.target.reset()
-
-        addEvent(data).then(response => {
-            if (!response.success) {
-                alert('Failed to add event: ' + response.message);
-            }
-            loadEvents();
-            
-        });
-    }
-    
-    
-    
-    return (
-        <div>
-        <div>
-            <h2> Create New Event: </h2>
-            <form onSubmit={handleCreateEvent}>
-                <input type="text" name="title" placeholder="Event Title"/>
-                <br/>
-                <textarea name="description" placeholder="Event Description"></textarea>
-                <br/>
-                <input type="text" name="location" placeholder="Event Location"/>
-                <br/>
-                <input type="datetime-local" name="start_time" placeholder="Start Time"/>
-                <br/>
-                <input type="datetime-local" name="end_time" placeholder="End Time"/>
-                <br/>
-                <input type="checkbox" name="is_private"/> Private Event
-                <br/>
-                <input type="password" name="password" placeholder="Event Password (if private)"/>
-                <br/>
-                <button type="submit"> Create Event </button>
-            </form>
-
-        </div>
-        <div>
-            <h2> Planner Dashboard: </h2>
-            <h3> Your Events: </h3>
-            {events.length === 0 && <p>No events created yet.</p>}
-
-            {events.length > 0 && (
-            <ul>
-                {events.map(event => (
-                    <li >
-
-                        <Link to={`/${event.id}`}> View Details </Link>
-                        <h3> {event.title} </h3>
-                        {event.is_private && <span>(Private Event)</span>}
-
-                    </li>
-
-                ))}
+          {sortedEvents.length === 0 ? (
+            <p className="text-muted">
+              Start by creating your first event on the left. It will show up here
+              once saved.
+            </p>
+          ) : (
+            <ul className="list--events">
+              {sortedEvents.map((event) => (
+                <li key={event.id}>
+                  <div className="event-row__main">
+                    <h3>{event.title}</h3>
+                    <p>
+                      {new Date(event.start_time).toLocaleString()} –{' '}
+                      {new Date(event.end_time).toLocaleString()}
+                    </p>
+                    <p className="text-muted">{event.location}</p>
+                  </div>
+                  <div className="event-row__meta">
+                    {event.is_private && (
+                      <span className="badge badge--private">Private</span>
+                    )}
+                    <Link className="btn btn-sm btn-ghost" to={`/${event.id}`}>
+                      View details
+                    </Link>
+                  </div>
+                </li>
+              ))}
             </ul>
-            )}
-        </div>
-
+          )}
+        </section>
+      </div>
     </div>
-    );
-
+  );
 }
 
 export default PlannerDashboard;
