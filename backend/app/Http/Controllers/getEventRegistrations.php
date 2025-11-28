@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Registration;
+use App\Models\User;
 
 class getEventRegistrations extends Controller
 {
@@ -21,8 +22,8 @@ class getEventRegistrations extends Controller
         $registrations = Registration::where('event_id', $eventId)->get();
 
         foreach ($registrations as $registration) {
-            $user = $registration->user;
-            $registration->user = $user;
+            $user_id = $registration->user_id;
+            $registration->user = User::find($user_id);
         } 
 
         return response()->json([

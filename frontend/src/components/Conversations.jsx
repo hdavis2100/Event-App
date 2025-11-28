@@ -66,7 +66,7 @@ function Conversations({ user }) {
                 ))}
             </ul>
 
-            <Link to="/">Back to Dashboard</Link>
+            
         </div>
     );
 

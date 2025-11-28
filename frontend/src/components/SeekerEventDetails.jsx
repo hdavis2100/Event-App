@@ -130,8 +130,7 @@ function SeekerEventDetails() {
                 <input type="text" name="comment" placeholder="Add a comment" required />
                 <button type="submit">Submit Comment</button>
             </form>
-            <Link to="/">Back to Dashboard</Link>
-            <Link to="/events">Back to Events</Link>
+           
         </div>
     );
 }

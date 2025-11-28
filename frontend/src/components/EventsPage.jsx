@@ -40,7 +40,7 @@ function EventsPage({user}) {
     return (
         <div>
 
-            <form onSubmit={handleSearch}>
+            <form onSubmit={handleSearch} className='search-form'>
                 <label>
                     Date:
                     <input type="date" name="date" defaultValue={date} />

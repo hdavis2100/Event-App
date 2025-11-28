@@ -103,8 +103,8 @@ function EventDetails() {
             <h2>{event.title}</h2>
             <p>{event.description}</p>
             <p>Location: {event.location}</p>
-            <p>Start Time: {event.start_time}</p>
-            <p>End Time: {event.end_time}</p>
+            <p>Start Time: {new Date(event.start_time).toLocaleString()}</p>
+            <p>End Time: {new Date(event.end_time).toLocaleString()}</p>
             <p>Private: {event.is_private ? 'Yes' : 'No'}</p>
             <h3>Registrations:</h3>
             <ul>
@@ -140,7 +140,7 @@ function EventDetails() {
             <button onClick={() => handleDeleteEvent(event.id)}>Delete Event</button>
 
             
-            <Link to="/">Back to Dashboard</Link>
+        
         </div>
     );
 }

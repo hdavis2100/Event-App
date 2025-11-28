@@ -49,9 +49,7 @@ function Conversation({ user }) {
                 <button type="submit">Send</button>
             </form>
 
-            
-            <Link to="/conversations">Back to Conversations</Link>
-            <Link to="/">Back to Dashboard</Link>
+    
         </div>
     );
 }
