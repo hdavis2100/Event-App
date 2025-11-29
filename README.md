@@ -1,6 +1,6 @@
-# SeekEvents
+# EventBridge
 
-SeekEvents is a small full stack web app that connects event planners with people who want to attend their events. Planners can create and manage events, and seekers can browse, register, and talk to hosts.
+EventBridge is a small full stack web app that connects event planners with people who want to attend their events. Planners can create and manage events, and seekers can browse, register, and talk to hosts.
 
 The repo contains both the Laravel backend API and the React frontend built with Vite.
 
