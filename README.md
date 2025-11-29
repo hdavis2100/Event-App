@@ -34,8 +34,8 @@ The repo contains both the Laravel backend API and the React frontend built with
   - CSRF protection on state changing endpoints  
   - Eloquent models for users, events, registrations, event messages, and private messages
 - Data  
-  - Relational database configured through the Laravel `.env` file
-
+  - Postgres Relational Database
+  - Built with Laravel migrations
 ## Project structure
 
 ```text
