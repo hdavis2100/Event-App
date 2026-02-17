@@ -164,10 +164,6 @@ function Auth({ onLoggedIn }) {
           </form>
         )}
 
-        <p className="auth-meta">
-          For demos, create one planner and one seeker account so you can show both
-          dashboards in interviews.
-        </p>
       </div>
     </div>
   );
