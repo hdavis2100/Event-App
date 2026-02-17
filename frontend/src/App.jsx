@@ -74,9 +74,9 @@ function App() {
     <div className="app-shell">
       <header className="app-header">
         <div className="app-brand">
-          <div className="app-logo">EB</div>
+          <div className="app-logo">EP</div>
           <div>
-            <h1 className="brand-title">EventBridge</h1>
+            <h1 className="brand-title">Event Planner</h1>
             <p className="brand-subtitle">
               {isSeeker
                 ? 'Discover and register for events'

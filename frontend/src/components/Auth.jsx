@@ -52,7 +52,7 @@ function Auth({ onLoggedIn }) {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-card__header">
-          <h1>Welcome to EventBridge</h1>
+          <h1>Welcome to Event Planner</h1>
           <p>
             Sign in as a planner to create events, or as a seeker to discover and
             register for them.
